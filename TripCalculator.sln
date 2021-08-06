@@ -1,0 +1,118 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31410.357
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Clients", "Clients", "{AE19DC01-B1DE-4CDB-86C5-ABE4A2E5633E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Modules", "Modules", "{F565BD86-5BFF-4E69-95C6-9F2595704EEE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{6298A9CA-A917-4F1B-98A4-BF5DFC624C9B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Domain", "Domain", "{52C759F0-37E1-43E2-877D-1BA71FA0A58E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.Domain.Lib", "Domain\TripCalculator.Domain.Lib\TripCalculator.Domain.Lib.csproj", "{F2BA1176-2C3B-467A-B643-A068F39955E9}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.Domain.CodeFirst", "Domain\TripCalculator.Domain.CodeFirst\TripCalculator.Domain.CodeFirst.csproj", "{54CA7AE3-E9E1-4BA8-BAF2-A7549492F5A1}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.WebAPI", "Clients\TripCalculator.WebAPI\TripCalculator.WebAPI.csproj", "{C2FF9704-C033-4B88-BAAF-B00163C46E5E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.BLL", "Modules\TripCalculator.BLL\TripCalculator.BLL.csproj", "{EE71A46F-DD39-4581-8BC1-1DA26DB9CC76}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.ClientServices", "Modules\TripCalculator.ClientServices\TripCalculator.ClientServices.csproj", "{42430B6D-57E1-482B-A04E-28F340A1E8B5}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.DAL", "Modules\TripCalculator.DAL\TripCalculator.DAL.csproj", "{08493995-75A0-4F02-9748-17972772D53E}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.Lib", "Modules\TripCalculator.Lib\TripCalculator.Lib.csproj", "{4618783C-0A99-4880-8C6A-1A7BBC2D675F}"
+EndProject
+Project("{E24C65DC-7377-472B-9ABA-BC803B73C61A}") = "TripCalculator.WebApp", "Clients\TripCalculator.WebApp\", "{A49842CF-CAD5-45BB-BDAF-E74DAEDC07F5}"
+	ProjectSection(WebsiteProperties) = preProject
+		TargetFrameworkMoniker = ".NETFramework,Version%3Dv4.0"
+		Debug.AspNetCompiler.VirtualPath = "/localhost_56139"
+		Debug.AspNetCompiler.PhysicalPath = "Clients\TripCalculator.WebApp\"
+		Debug.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56139\"
+		Debug.AspNetCompiler.Updateable = "true"
+		Debug.AspNetCompiler.ForceOverwrite = "true"
+		Debug.AspNetCompiler.FixedNames = "false"
+		Debug.AspNetCompiler.Debug = "True"
+		Release.AspNetCompiler.VirtualPath = "/localhost_56139"
+		Release.AspNetCompiler.PhysicalPath = "Clients\TripCalculator.WebApp\"
+		Release.AspNetCompiler.TargetPath = "PrecompiledWeb\localhost_56139\"
+		Release.AspNetCompiler.Updateable = "true"
+		Release.AspNetCompiler.ForceOverwrite = "true"
+		Release.AspNetCompiler.FixedNames = "false"
+		Release.AspNetCompiler.Debug = "False"
+		VWDPort = "56139"
+		SlnRelativePath = "Clients\TripCalculator.WebApp\"
+	EndProjectSection
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.Tests.BLL", "Tests\TripCalculator.Tests.BLL\TripCalculator.Tests.BLL.csproj", "{FFC6A38B-B480-4368-9EFE-AD6BD6A19C4A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TripCalculator.Tests.DAL", "Tests\TripCalculator.Tests.DAL\TripCalculator.Tests.DAL.csproj", "{56EE01E5-F3E7-42C7-866D-386FD9330AF7}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F2BA1176-2C3B-467A-B643-A068F39955E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F2BA1176-2C3B-467A-B643-A068F39955E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F2BA1176-2C3B-467A-B643-A068F39955E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F2BA1176-2C3B-467A-B643-A068F39955E9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{54CA7AE3-E9E1-4BA8-BAF2-A7549492F5A1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{54CA7AE3-E9E1-4BA8-BAF2-A7549492F5A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{54CA7AE3-E9E1-4BA8-BAF2-A7549492F5A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{54CA7AE3-E9E1-4BA8-BAF2-A7549492F5A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C2FF9704-C033-4B88-BAAF-B00163C46E5E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C2FF9704-C033-4B88-BAAF-B00163C46E5E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C2FF9704-C033-4B88-BAAF-B00163C46E5E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C2FF9704-C033-4B88-BAAF-B00163C46E5E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{EE71A46F-DD39-4581-8BC1-1DA26DB9CC76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE71A46F-DD39-4581-8BC1-1DA26DB9CC76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE71A46F-DD39-4581-8BC1-1DA26DB9CC76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE71A46F-DD39-4581-8BC1-1DA26DB9CC76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{42430B6D-57E1-482B-A04E-28F340A1E8B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{42430B6D-57E1-482B-A04E-28F340A1E8B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{42430B6D-57E1-482B-A04E-28F340A1E8B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{42430B6D-57E1-482B-A04E-28F340A1E8B5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{08493995-75A0-4F02-9748-17972772D53E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{08493995-75A0-4F02-9748-17972772D53E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{08493995-75A0-4F02-9748-17972772D53E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{08493995-75A0-4F02-9748-17972772D53E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4618783C-0A99-4880-8C6A-1A7BBC2D675F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4618783C-0A99-4880-8C6A-1A7BBC2D675F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4618783C-0A99-4880-8C6A-1A7BBC2D675F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4618783C-0A99-4880-8C6A-1A7BBC2D675F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A49842CF-CAD5-45BB-BDAF-E74DAEDC07F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49842CF-CAD5-45BB-BDAF-E74DAEDC07F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A49842CF-CAD5-45BB-BDAF-E74DAEDC07F5}.Release|Any CPU.ActiveCfg = Debug|Any CPU
+		{A49842CF-CAD5-45BB-BDAF-E74DAEDC07F5}.Release|Any CPU.Build.0 = Debug|Any CPU
+		{FFC6A38B-B480-4368-9EFE-AD6BD6A19C4A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFC6A38B-B480-4368-9EFE-AD6BD6A19C4A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFC6A38B-B480-4368-9EFE-AD6BD6A19C4A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFC6A38B-B480-4368-9EFE-AD6BD6A19C4A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{56EE01E5-F3E7-42C7-866D-386FD9330AF7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{56EE01E5-F3E7-42C7-866D-386FD9330AF7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{56EE01E5-F3E7-42C7-866D-386FD9330AF7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{56EE01E5-F3E7-42C7-866D-386FD9330AF7}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{F2BA1176-2C3B-467A-B643-A068F39955E9} = {52C759F0-37E1-43E2-877D-1BA71FA0A58E}
+		{54CA7AE3-E9E1-4BA8-BAF2-A7549492F5A1} = {52C759F0-37E1-43E2-877D-1BA71FA0A58E}
+		{C2FF9704-C033-4B88-BAAF-B00163C46E5E} = {AE19DC01-B1DE-4CDB-86C5-ABE4A2E5633E}
+		{EE71A46F-DD39-4581-8BC1-1DA26DB9CC76} = {F565BD86-5BFF-4E69-95C6-9F2595704EEE}
+		{42430B6D-57E1-482B-A04E-28F340A1E8B5} = {F565BD86-5BFF-4E69-95C6-9F2595704EEE}
+		{08493995-75A0-4F02-9748-17972772D53E} = {F565BD86-5BFF-4E69-95C6-9F2595704EEE}
+		{4618783C-0A99-4880-8C6A-1A7BBC2D675F} = {F565BD86-5BFF-4E69-95C6-9F2595704EEE}
+		{A49842CF-CAD5-45BB-BDAF-E74DAEDC07F5} = {AE19DC01-B1DE-4CDB-86C5-ABE4A2E5633E}
+		{FFC6A38B-B480-4368-9EFE-AD6BD6A19C4A} = {6298A9CA-A917-4F1B-98A4-BF5DFC624C9B}
+		{56EE01E5-F3E7-42C7-866D-386FD9330AF7} = {6298A9CA-A917-4F1B-98A4-BF5DFC624C9B}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {14BFACF5-4A28-45A9-8F98-5279C5229FC0}
+	EndGlobalSection
+EndGlobal

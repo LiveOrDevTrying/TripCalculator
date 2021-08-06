@@ -1,0 +1,228 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div *ngIf="isAuthenticated">
+  <div *ngIf="isLoaded">
+    <div class="background-color-main">
+
+      <!-- <div *ngIf="!isOnMobile">
+        <div class="mobile-nav-container">
+          <span>
+            <button mat-button class="navbar_element" [routerLink]="['/']">
+              <img src="https://pixelhorrorstudios.s3-us-west-2.amazonaws.com/The+Monitaur/App/LogoSmallText.png"
+                alt="The Monitaur Logo" />
+            </button>
+    
+            <button mat-button class="navbar_element" [routerLink]="['/']">
+              <mat-icon>clear_all</mat-icon>
+              Clear
+            </button>
+    
+            <button mat-button class="navbar_element" [matMenuTriggerFor]="alertMenu" *ngIf="projects.length > 0">
+              <mat-icon>notification_important</mat-icon>
+              Alerts
+            </button>
+    
+            <mat-menu #alertMenu="matMenu">
+              <button mat-menu-item class="navbar_element" [routerLink]="['/alerts/cards']">
+                <mat-icon>event_note</mat-icon>
+                Cards
+              </button>
+    
+              <button mat-menu-item class="navbar_element" [routerLink]="['/alerts']">
+                <mat-icon>view_list</mat-icon>
+                Table
+              </button>
+            </mat-menu>
+    
+            <button mat-button *ngIf="projects.length > 0" class="navbar_element" [routerLink]="['/projects']">
+              <mat-icon>apps</mat-icon>
+              Projects
+            </button>
+    
+            <button mat-button class="navbar_element" [matMenuTriggerFor]="devMenu">
+              <mat-icon>code</mat-icon>
+              Developer
+            </button>
+    
+            <mat-menu #devMenu="matMenu">
+              <button mat-menu-item (click)="goToDeveloperDocumentation()">
+                <mat-icon>description</mat-icon>Documentation
+              </button>
+              <button mat-menu-item (click)="goToWebAPIDocumentation()">
+                <mat-icon>web</mat-icon>WebAPI
+              </button>
+              <button mat-menu-item (click)="goToGithub()">
+                <mat-icon>code</mat-icon>SDKs
+              </button>
+              <button mat-menu-item (click)="goToNuget()">
+                <mat-icon>cloud_download</mat-icon>Nuget
+              </button>
+            </mat-menu>
+          </span>
+          <span>
+            <button mat-button class="navbar_element" [matMenuTriggerFor]="accountMenu">
+              <mat-icon>more_vert</mat-icon>
+              Account
+            </button>
+            <button mat-button class="navbar_element" (click)="logout()">
+              <mat-icon>logout</mat-icon>
+              Logout
+            </button>
+          </span>
+        </div>
+        <mat-menu #accountMenu="matMenu">
+          <button mat-menu-item [routerLink]="['/cart/purchasableItems']">
+            <mat-icon>attach_money</mat-icon>
+            Purchasable Items
+          </button>
+          <button mat-menu-item [routerLink]="['/cart']">
+            <mat-icon>shopping_cart</mat-icon>
+            Cart
+          </button>
+          <button mat-menu-item [routerLink]="['/account']">
+            <mat-icon>account_circle</mat-icon>
+            Account
+          </button>
+        </mat-menu>
+      </div>
+    </div> -->
+
+    <!-- <div *ngIf="isOnMobile" class="mobile-nav-container">
+      <span>
+        <button mat-button class="navbar_element" [routerLink]="['/']">
+          <img src="https://pixelhorrorstudios.s3-us-west-2.amazonaws.com/The+Monitaur/App/LogoSmallText.png"
+            alt="The Monitaur Logo" />
+        </button>
+
+        <button mat-button class="navbar_element" [routerLink]="['/']">
+          <mat-icon>clear_all</mat-icon>
+          Clear
+        </button>
+      </span>
+
+      <button mat-button class="navbar_element" [matMenuTriggerFor]="mobileActions">
+        <mat-icon>more_vert</mat-icon>
+        Actions
+      </button>
+    </div> -->
+
+    <mat-menu #mobileActions="matMenu" xPosition="before">
+
+      <!-- <button mat-menu-item class="mobile-root-menu" [matMenuTriggerFor]="alertMenu" *ngIf="projects.length > 0">
+        <mat-icon>notification_important</mat-icon>
+        Alerts
+      </button>
+
+      <mat-menu #alertMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/alerts/cards']">
+          <mat-icon>event_note</mat-icon>
+          Cards
+        </button>
+
+        <button mat-menu-item [routerLink]="['/alerts']">
+          <mat-icon>view_list</mat-icon>
+          Table
+        </button>
+      </mat-menu>
+
+      <button mat-menu-item *ngIf="projects.length > 0" class="mobile-root-menu" [routerLink]="['/projects']">
+        <mat-icon>apps</mat-icon>
+        Projects
+      </button>
+
+      <button mat-menu-item class="mobile-root-menu" [matMenuTriggerFor]="devMenu">
+        <mat-icon>code</mat-icon>
+        Developer
+      </button>
+
+      <mat-menu #devMenu="matMenu">
+        <button mat-menu-item (click)="goToDeveloperDocumentation()">
+          <mat-icon>description</mat-icon>Documentation
+        </button>
+        <button mat-menu-item (click)="goToWebAPIDocumentation()">
+          <mat-icon>web</mat-icon>WebAPI
+        </button>
+        <button mat-menu-item (click)="goToGithub()">
+          <mat-icon>code</mat-icon>SDKs
+        </button>
+        <button mat-menu-item (click)="goToNuget()">
+          <mat-icon>cloud_download</mat-icon>Nuget
+        </button>
+      </mat-menu>
+
+      <button mat-menu-item class="mobile-root-menu" [matMenuTriggerFor]="accountMenu">
+        <mat-icon>more_horiz</mat-icon>
+        Account
+      </button>
+
+      <mat-menu #accountMenu="matMenu">
+        <button mat-menu-item [routerLink]="['/cart/purchasableItems']">
+          <mat-icon>attach_money</mat-icon>
+          Purchasable Items
+        </button>
+        <button mat-menu-item [routerLink]="['/cart']">
+          <mat-icon>shopping_cart</mat-icon>
+          Cart
+        </button>
+        <button mat-menu-item [routerLink]="['/account']">
+          <mat-icon>account_circle</mat-icon>
+          Account
+        </button>
+      </mat-menu>
+      <button mat-menu-item class="mobile-root-menu" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button> -->
+
+    </mat-menu>
+
+  </div>
+  <div *ngIf="!isLoaded">
+    <div class="background-color-main">
+      <button mat-button class="navbar_element" [routerLink]="['/']">
+        <img src="https://pixelhorrorstudios.s3-us-west-2.amazonaws.com/The+Monitaur/App/LogoSmallText.png"
+          alt="The Monitaur Logo" />
+      </button>
+
+      <!-- <button mat-button class="navbar_element" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button> -->
+    </div>
+  </div>
+
+  <mat-divider *ngIf="isLoaded"></mat-divider>
+
+  <!-- <app-startstepper *ngIf="isPayloadReceived && this.projects.length === 0"></app-startstepper> -->
+
+  <router-outlet></router-outlet>
+
+  <mat-divider *ngIf="isLoaded"></mat-divider>
+<!-- 
+  <div class="background-color-main padding-simple" *ngIf="projects.length > 0">
+    <mat-expansion-panel class="mat-card-app projects-visible-container">
+      <mat-expansion-panel-header>
+        Set Visible Projects
+      </mat-expansion-panel-header>
+      <span *ngFor="let project of projects">
+        <mat-checkbox color="primary" mat-primary [(ngModel)]="project.isShown"
+          (change)="visibleProjectsChange($event, project)">
+          {{ project.projectName }}
+        </mat-checkbox>
+      </span>
+    </mat-expansion-panel>
+  </div> -->
+
+  <mat-divider *ngIf="isLoaded"></mat-divider>
+<!-- 
+  <div *ngIf="projects" class="flex-parent">
+    <div *ngFor="let project of visibleProjects; let i=index" class="flex-child">
+      <div *ngIf="project.isShown" class="isShown-container">
+        <mat-card class="mat-card-app" flex>
+          <div class="border-inside">
+            <app-projectsdashboard [projectId]="project.id"></app-projectsdashboard>
+          </div>
+        </mat-card>
+      </div>
+    </div>
+  </div> -->
+</div>
