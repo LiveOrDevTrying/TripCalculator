@@ -7,53 +7,55 @@ import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Subscription } from 'rxjs';
-import { AppState, IUser } from 'src/app/core';
+import { AppState, ITrip } from 'src/app/core';
 import { ConfirmationmodalComponent, IConfirmationModalData } from 'src/app/shared';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
-import { UserService } from '../user.service';
+import { TripService } from '../trip.service';
 
 @Component({
-  selector: 'app-users',
-  templateUrl: './users.component.html',
-  styleUrls: ['./users.component.scss']
+  selector: 'app-trips',
+  templateUrl: './trips.component.html',
+  styleUrls: ['./trips.component.scss']
 })
-export class UsersComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
+export class TripsComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
-  $userDeleteSubscription: Subscription;
+  $tripDeleteSubscription: Subscription;
 
   displayedColumns: string[] = [
-    'username',
-    'trips',
+    'tripName',
+    'startDate',
+    'endDate',
+    'userCount',
     'remove'
   ];
 
   loading = false;
-  dataSource = new MatTableDataSource<IUser>();
+  dataSource = new MatTableDataSource<ITrip>();
 
   constructor(protected store: Store<AppState>,
     protected toastrService: ToastrService,
     protected router: Router,
     protected matDialog: MatDialog,
-    protected userService: UserService) {
+    protected tripService: TripService) {
     super(store); 
 
-    this.$userDeleteSubscription = this.userService
-      .getDeleteUser()
+    this.$tripDeleteSubscription = this.tripService
+      .getDeleteTrip()
       .subscribe(success => {
         this.loading = false;
 
         if (success) {
-          this.toastrService.success('The user was deleted successfully.');
+          this.toastrService.success('The trip was deleted successfully.');
         } else {
-          this.toastrService.error('The user could not be deleted.');
+          this.toastrService.error('The trip could not be deleted.');
         }
       });
   }
 
   ngOnInit() {
-    this.afterAssignUsers();
+    this.afterAssignTrips();
   }
 
   ngAfterViewInit() {
@@ -63,23 +65,23 @@ export class UsersComponent extends BaseComponent implements OnInit, AfterViewIn
 
   ngOnDestroy() {
     super.ngOnDestroy();
-    this.$userDeleteSubscription.unsubscribe();
+    this.$tripDeleteSubscription.unsubscribe();
   }
 
-  afterAssignUsers() {
+  afterAssignTrips() {
     if (this.dataSource) {
-      this.dataSource.data = this.users;
+      this.dataSource.data = this.trips;
     }
   }
 
-  createUser() {
-    this.router.navigateByUrl('/users/user');
+  createTrip() {
+    this.router.navigateByUrl('/trips/trip');
   }
 
-  removeUser(id: string) {
+  removeTrip(id: string) {
     const confirmationModalData: IConfirmationModalData = {
       title: 'Are you sure?',
-      message: 'Are you sure you want to delete this user?',
+      message: 'Are you sure you want to delete this trip?',
       isConfirmed: false,
       confirmMessage: 'Confirm',
       cancelMessage: 'Cancel'
@@ -94,12 +96,12 @@ export class UsersComponent extends BaseComponent implements OnInit, AfterViewIn
       if (result !== undefined) {
         this.loading = true;
 
-        this.userService.deleteUser(id);
+        this.tripService.deleteTrip(id);
       }
     });
   }
 
-  getTripCount(id: string) {
-    return this.tripsUsers.filter(x => x.userId === id).length;
+  getUserCount(id: string) {
+    return this.tripsUsers.filter(x => x.tripId === id).length;
   }
 }

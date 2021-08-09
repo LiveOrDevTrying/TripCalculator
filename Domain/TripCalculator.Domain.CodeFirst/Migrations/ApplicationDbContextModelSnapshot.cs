@@ -134,7 +134,7 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TripUsers");
+                    b.ToTable("TripsUsers");
                 });
 
             modelBuilder.Entity("TripCalculator.Domain.Lib.User", b =>

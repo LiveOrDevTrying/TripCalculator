@@ -21,10 +21,11 @@ namespace TripCalculator.DAL
 
         Task<TripDTO[]> GetTripsAsync(Guid applicationUserId);
         Task<TripVM> GetTripAsync(Guid tripId, Guid applicationUserId);
-        Task<TripDTO> CreateTripAsync(TripCreateRequest request, Guid applicationUserId);
-        Task<TripDTO> UpdateTripAsync(Guid id, TripUpdateRequest request, Guid applicationUserId);
+        Task<TripVM> CreateTripAsync(TripCreateRequest request, Guid applicationUserId);
+        Task<TripVM> UpdateTripAsync(Guid id, TripUpdateRequest request, Guid applicationUserId);
         Task<bool> DeleteTripAsync(Guid id, Guid applicationTripId);
 
+        Task<TripUserDTO[]> GetTripsUsersAsync(Guid[] tripIds, Guid applicationUserId);
         Task<TripUserDTO[]> GetTripsUsersAsync(Guid tripId, Guid applicationUserId);
         Task<TripUserVM> GetTripUserAsync(Guid tripUserId, Guid applicationUserId);
         Task<TripDTO> CreateTripUserAsync(TripUserCreateRequest request, Guid applicationUserId);

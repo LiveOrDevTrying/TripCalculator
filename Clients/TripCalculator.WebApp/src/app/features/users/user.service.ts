@@ -1,7 +1,7 @@
 import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable, Subject, Subscription } from 'rxjs';
+import { Observable, Subject } from 'rxjs';
 import { AddUser, AppState, DeleteUser, GlobalsService, IUser, ModifyUser } from 'src/app/core';
 import { IUserCreateRequest, IUserUpdateRequest } from './models';
 

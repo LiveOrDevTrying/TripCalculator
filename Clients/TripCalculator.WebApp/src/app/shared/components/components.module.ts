@@ -9,12 +9,16 @@ import { BaseComponent } from './base/base.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { ConfirmationmodalComponent } from './modals/confirmationmodal/confirmationmodal.component';
 import { ModulesModule } from '../modules/modules.module';
+import { UserswidgetComponent } from './userswidget/userswidget.component';
+import { TripswidgetComponent } from './tripswidget/tripswidget.component';
 
 @NgModule({
   declarations: [
     BaseComponent,
     DashboardComponent,
-    ConfirmationmodalComponent
+    ConfirmationmodalComponent,
+    UserswidgetComponent,
+    TripswidgetComponent
   ],
   imports: [
     FormsModule,
@@ -30,7 +34,9 @@ import { ModulesModule } from '../modules/modules.module';
     FormsModule,
     NgxLoadingModule,
     ToastrModule,
-    RouterModule
+    RouterModule,
+    UserswidgetComponent,
+    TripswidgetComponent
   ],
   entryComponents: [
     ConfirmationmodalComponent

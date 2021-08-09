@@ -75,9 +75,15 @@ namespace TripCalculator.DAL
         {
             try
             {
+                var users = await GetUsersAsync(applicationUserId);
+                var trips = await GetTripsAsync(applicationUserId);
+                var tripUsers = await GetTripsUsersAsync(trips.Select(x => x.Id).ToArray(), applicationUserId);
+
                 return new Payload
                 {
-                    Users = await GetUsersAsync(applicationUserId)
+                    Users = users,
+                    Trips = trips,
+                    TripsUsers = tripUsers
                 };
             }
             catch (Exception ex)
@@ -100,7 +106,7 @@ namespace TripCalculator.DAL
 
                 entities.ForEach(x => dtos.Add(_mapper.Map<UserDTO>(x)));
 
-                return dtos.ToArray();
+                return dtos.OrderBy(x => x.Username).ToArray();
             }
             catch (Exception ex)
             {
@@ -120,10 +126,7 @@ namespace TripCalculator.DAL
 
                 return new UserVM
                 {
-                    Data = new UserDTO[]
-                    {
-                         _mapper.Map<UserDTO>(entity)
-                    }
+                    DTO = _mapper.Map<UserDTO>(entity)
                 };
             }
             catch (Exception ex)
@@ -221,7 +224,7 @@ namespace TripCalculator.DAL
 
                 entities.ForEach(x => dtos.Add(_mapper.Map<TripDTO>(x)));
 
-                return dtos.ToArray();
+                return dtos.OrderBy(x => x.TripName).ToArray();
             }
             catch (Exception ex)
             {
@@ -241,10 +244,8 @@ namespace TripCalculator.DAL
 
                 return new TripVM
                 {
-                    Data = new TripDTO[]
-                    {
-                         _mapper.Map<TripDTO>(entity)
-                    }
+                    DTO = _mapper.Map<TripDTO>(entity),
+                    TripsUsers = await GetTripsUsersAsync(tripId, applicationUserId)
                 };
             }
             catch (Exception ex)
@@ -253,18 +254,28 @@ namespace TripCalculator.DAL
                 throw ex;
             }
         }
-        public virtual async Task<TripDTO> CreateTripAsync(TripCreateRequest request, Guid applicationUserId)
+        public virtual async Task<TripVM> CreateTripAsync(TripCreateRequest request, Guid applicationUserId)
         {
             try
             {
                 var entity = _mapper.Map<Trip>(request);
                 entity.ApplicationUserId = applicationUserId;
-
                 await _context.Trips.AddAsync(entity);
+
+                var tripUsers = new List<TripUser>();
+                foreach (var userId in request.UserIds)
+                {
+                    tripUsers.Add(new TripUser
+                    {
+                        UserId = userId,
+                        TripId = entity.Id,
+                    });
+                }
+                await _context.TripsUsers.AddRangeAsync(tripUsers);
 
                 if (await _context.SaveChangesAsync() > 0)
                 {
-                    return _mapper.Map<TripDTO>(entity);
+                    return await GetTripAsync(entity.Id, applicationUserId);
                 }
 
                 return null;
@@ -275,10 +286,12 @@ namespace TripCalculator.DAL
                 throw ex;
             }
         }
-        public virtual async Task<TripDTO> UpdateTripAsync(Guid id, TripUpdateRequest request, Guid applicationUserId)
+        public virtual async Task<TripVM> UpdateTripAsync(Guid id, TripUpdateRequest request, Guid applicationUserId)
         {
             try
             {
+                var entitiesToAdd = new List<BaseEntity>();
+
                 var entity = await _context.Trips
                     .FirstOrDefaultAsync(x => x.Id == request.Id &&
                         x.ApplicationUserId == applicationUserId &&
@@ -289,9 +302,42 @@ namespace TripCalculator.DAL
                     entity = _mapper.Map(request, entity);
                     _context.Entry(entity).State = EntityState.Modified;
 
+                    var tripUsers = await _context.TripsUsers
+                        .Where(x => x.TripId == entity.Id)
+                        .ToListAsync();
+
+                    foreach (var tripUser in tripUsers)
+                    {
+                        if (!request.UserIds.Any(x => x == tripUser.UserId))
+                        {
+                            tripUser.Active = false;
+                            _context.Entry(tripUser).State = EntityState.Modified;
+                        }
+                    }
+
+                    foreach (var userId in request.UserIds)
+                    {
+                        if (!tripUsers.Any(x => x.UserId == userId))
+                        {
+                            entitiesToAdd.Add(new TripUser
+                            {
+                                UserId = userId,
+                                TripId = entity.Id,
+                            });
+                        }
+                        else if (tripUsers.Any(x => x.UserId == userId)) 
+                        {
+                            var tripUser = tripUsers.First(x => x.UserId == userId);
+                            tripUser.Active = true;
+                            _context.Entry(tripUser).State = EntityState.Modified;
+                        }
+                    }
+
+                    await _context.AddRangeAsync(entitiesToAdd);
+
                     if (await _context.SaveChangesAsync() > 0)
                     {
-                        return _mapper.Map<TripDTO>(entity);
+                        return await GetTripAsync(id, applicationUserId);
                     }
                 }
 
@@ -329,6 +375,27 @@ namespace TripCalculator.DAL
             }
         }
 
+        public virtual async Task<TripUserDTO[]> GetTripsUsersAsync(Guid[] tripIds, Guid applicationUserId)
+        {
+            try
+            {
+                var entities = await _context.TripsUsers
+                    .AsNoTracking()
+                    .Where(x => tripIds.Contains(x.TripId) && x.Active)
+                    .ToListAsync();
+
+                var dtos = new List<TripUserDTO>();
+
+                entities.ForEach(x => dtos.Add(_mapper.Map<TripUserDTO>(x)));
+
+                return dtos.ToArray();
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception - GetTripsAsync in DAL");
+                throw ex;
+            }
+        }
         public virtual async Task<TripUserDTO[]> GetTripsUsersAsync(Guid tripId, Guid applicationUserId)
         {
             try
@@ -338,16 +405,21 @@ namespace TripCalculator.DAL
                         x.ApplicationUserId == applicationUserId &&
                         x.Active);
 
-                var entities = await _context.TripsUsers
-                    .AsNoTracking()
-                    .Where(x => x.TripId == tripEntity.Id && x.Active)
-                    .ToListAsync();
+                if (tripEntity != null)
+                {
+                    var entities = await _context.TripsUsers
+                        .AsNoTracking()
+                        .Where(x => x.TripId == tripEntity.Id && x.Active)
+                        .ToListAsync();
 
-                var dtos = new List<TripUserDTO>();
+                    var dtos = new List<TripUserDTO>();
 
-                entities.ForEach(x => dtos.Add(_mapper.Map<TripUserDTO>(x)));
+                    entities.ForEach(x => dtos.Add(_mapper.Map<TripUserDTO>(x)));
+                    
+                    return dtos.ToArray();
+                }
 
-                return dtos.ToArray();
+                return null;
             }
             catch (Exception ex)
             {

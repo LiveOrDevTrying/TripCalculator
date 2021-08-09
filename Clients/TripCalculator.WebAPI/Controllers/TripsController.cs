@@ -95,7 +95,7 @@ namespace TripCalculator.WebAPI.Controllers
         /// <param name="request">The Trip create request</param>
         /// <returns>The created TripDTO</returns>
         [HttpPost("/Trips")]
-        [ProducesResponseType(typeof(TripDTO), StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(TripVM), StatusCodes.Status201Created)]
         [ProducesResponseType(typeof(TripCreateRequest), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(typeof(string), StatusCodes.Status403Forbidden)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
@@ -132,7 +132,7 @@ namespace TripCalculator.WebAPI.Controllers
         /// <param name="request">The Trip update request</param>
         /// <returns>A TripDTO</returns>
         [HttpPut("/Trips/{id}")]
-        [ProducesResponseType(typeof(TripDTO), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(TripVM), StatusCodes.Status200OK)]
         [ProducesResponseType(typeof(TripUpdateRequest), StatusCodes.Status400BadRequest)]
         [ProducesResponseType(StatusCodes.Status500InternalServerError)]
         public async Task<IActionResult> PutTripAsync([Required] Guid id, [Required, FromBody] TripUpdateRequest request)

@@ -10,7 +10,7 @@ using TripCalculator.Domain.CodeFirst;
 namespace TripCalculator.Domain.CodeFirst.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210806034256_Init")]
+    [Migration("20210809061228_Init")]
     partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -136,7 +136,7 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("TripUsers");
+                    b.ToTable("TripsUsers");
                 });
 
             modelBuilder.Entity("TripCalculator.Domain.Lib.User", b =>

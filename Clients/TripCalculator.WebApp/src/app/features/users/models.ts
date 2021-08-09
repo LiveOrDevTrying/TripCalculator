@@ -1,4 +1,4 @@
-import { IRequest, IRequestUpdate } from "src/app/core";
+import { IRequest, IRequestUpdate } from "../models";
 
 export interface IUserCreateRequest extends IRequest {
     username: string;

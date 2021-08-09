@@ -3,8 +3,9 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
-import { Subscription } from 'rxjs';
-import { AppState, IUser } from 'src/app/core';
+import { Subject, Subscription } from 'rxjs';
+import { AppState, ITrip, IUser } from 'src/app/core';
+import { ITripsWidgetData } from 'src/app/shared';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { IUserCreateRequest, IUserUpdateRequest } from '../models';
 import { UserService } from '../user.service';
@@ -15,14 +16,17 @@ import { UserService } from '../user.service';
   styleUrls: ['./user.component.scss']
 })
 export class UserComponent extends BaseComponent implements OnInit, OnDestroy {
-  id = '';
-  username = '';
+  id: string;
+  username: string;
   user: IUser;
+  tripsWidgetData: ITripsWidgetData;
   loading = false;
 
   $routeSubscription: Subscription;
   $userCreateSubscription: Subscription;
   $userUpdateSubscription: Subscription;
+
+  $tripsSubject = new Subject();
   
   constructor(protected store: Store<AppState>,
     protected route: ActivatedRoute,
@@ -31,13 +35,6 @@ export class UserComponent extends BaseComponent implements OnInit, OnDestroy {
     protected toastrService: ToastrService,
     protected userService: UserService) {
       super(store);
-
-      this.$routeSubscription = this.route.params
-        .subscribe(params => {
-          this.id = params['id'];
-          this.assignUser();
-        });
-
       this.$userCreateSubscription = this.userService
         .getCreateUser()
         .subscribe((user: IUser) => {
@@ -62,6 +59,12 @@ export class UserComponent extends BaseComponent implements OnInit, OnDestroy {
    }
 
   ngOnInit() {
+    this.$routeSubscription = this.route.params
+      .subscribe(params => {
+        this.id = params['id'];
+        this.assignUser();
+      });
+
     this.assignUser();
   }
 
@@ -76,12 +79,30 @@ export class UserComponent extends BaseComponent implements OnInit, OnDestroy {
     this.assignUser();
   }
 
-  assignUser() {
-    if (this.id && this.users && !this.user) {
-      this.user = this.users.filter(x => x.id === this.id)[0];
+  afterAssignTripsUsers() {
+    this.assignUser();
+  }
 
-      if (this.user) {
-        this.username = this.user.username;
+  assignUser() {
+    if (this.id) {
+      if (this.users && this.tripsUsers && !this.user) {
+        this.user = this.users.filter(x => x.id === this.id)[0];
+
+        if (this.user) {
+          this.username = this.user.username;
+
+          this.tripsWidgetData = {
+            title: "User's Trips",
+            canCreateTrip: false,
+            trips: this.trips.filter(x => this.tripsUsers.find(t => t.tripId === x.id && t.userId === this.id))
+          }
+        }
+      }
+    } else {
+      this.tripsWidgetData = {
+        title: "User's Trips",
+        canCreateTrip: false,
+        trips: []
       }
     }
   }
@@ -120,5 +141,8 @@ export class UserComponent extends BaseComponent implements OnInit, OnDestroy {
 
   back() {
     this.location.back();
+  }
+
+  onTripClicked(trip: ITrip) {
   }
 }

@@ -1,6 +1,8 @@
 export interface AppState {
     claims: any;
     users: IUser[];
+    trips: ITrip[];
+    tripsUsers: ITripUser[];
 }
 
 export interface IBaseInterface {
@@ -9,15 +11,21 @@ export interface IBaseInterface {
 
 export interface IPayload extends IBaseInterface {
     users: IUser[];
+    trips: ITrip[];
+    tripsUsers: ITripUser[];
 }
 
 export interface IUser extends IBaseInterface {
     username: string;
 }
 
-export interface IRequest {
+export interface ITrip extends IBaseInterface {
+    tripName: string;
+    tripStartDate: Date;
+    tripEndDate: Date;
 }
 
-export interface IRequestUpdate extends IRequest {
-    id: string;
+export interface ITripUser extends IBaseInterface {
+    tripId: string;
+    userId: string;
 }

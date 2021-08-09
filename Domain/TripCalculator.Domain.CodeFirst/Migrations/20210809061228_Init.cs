@@ -62,7 +62,7 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "TripUsers",
+                name: "TripsUsers",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -73,15 +73,15 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TripUsers", x => x.Id);
+                    table.PrimaryKey("PK_TripsUsers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TripUsers_Trips_TripId",
+                        name: "FK_TripsUsers_Trips_TripId",
                         column: x => x.TripId,
                         principalTable: "Trips",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_TripUsers_Users_UserId",
+                        name: "FK_TripsUsers_Users_UserId",
                         column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
@@ -104,9 +104,9 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
                 {
                     table.PrimaryKey("PK_Expenses", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Expenses_TripUsers_TripUserId",
+                        name: "FK_Expenses_TripsUsers_TripUserId",
                         column: x => x.TripUserId,
-                        principalTable: "TripUsers",
+                        principalTable: "TripsUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -128,13 +128,13 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
                 column: "ApplicationUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TripUsers_TripId",
-                table: "TripUsers",
+                name: "IX_TripsUsers_TripId",
+                table: "TripsUsers",
                 column: "TripId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TripUsers_UserId",
-                table: "TripUsers",
+                name: "IX_TripsUsers_UserId",
+                table: "TripsUsers",
                 column: "UserId");
 
             migrationBuilder.CreateIndex(
@@ -169,7 +169,7 @@ namespace TripCalculator.Domain.CodeFirst.Migrations
                 name: "Expenses");
 
             migrationBuilder.DropTable(
-                name: "TripUsers");
+                name: "TripsUsers");
 
             migrationBuilder.DropTable(
                 name: "Trips");
