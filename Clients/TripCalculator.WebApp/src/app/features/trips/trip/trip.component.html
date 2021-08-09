@@ -1,0 +1,62 @@
+<mat-card class="trip-container">
+    <ngx-loading [show]="loading"></ngx-loading>
+    <mat-card-title>
+        Trip
+    </mat-card-title>
+    <mat-card-content>
+        <mat-form-field>
+            <input matInput class="form-control" placeholder="Trip Name" [(ngModel)]="tripName"
+                (keyup.enter)="saveTrip()" />
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+            <input matInput placeholder="Trip Start Date" [matDatepicker]="startDatePicker" [(ngModel)]="startDate"
+                (keyup.enter)="saveTrip()">
+            <mat-datepicker-toggle matSuffix [for]="startDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #startDatePicker></mat-datepicker>
+        </mat-form-field>
+        <br />
+        <mat-form-field>
+            <input matInput placeholder="Trip End Date" [matDatepicker]="endDatePicker" [(ngModel)]="endDate"
+                (keyup.enter)="saveTrip()">
+            <mat-datepicker-toggle matSuffix [for]="endDatePicker"></mat-datepicker-toggle>
+            <mat-datepicker #endDatePicker></mat-datepicker>
+        </mat-form-field>
+    </mat-card-content>
+    <mat-card-footer>
+        <button mat-primary color="primary" type="button" id="back" mat-stroked-button (click)="back()">
+            Back
+        </button>
+        <button *ngIf="id === undefined ||
+            id === null ||
+            id === ''" mat-raised-button color="primary" type="button" mat-stroked-button (click)="saveTrip()">
+            Create Trip
+        </button>
+        <button *ngIf="id !== undefined &&
+            id !== null &&
+            id !== ''" mat-raised-button color="primary" type="button" mat-stroked-button (click)="saveTrip()">
+            Update Trip
+        </button>
+    </mat-card-footer>
+</mat-card>
+
+
+<mat-card>
+    <div *ngFor="let tripUser of getTripUsers(id)">
+        <app-expenseswidget [props]="getExpenseWidgetDate(tripUser.id)" [propsChanged]="$expensesSubject" (expenseClicked)="onExpenseClick($event)"></app-expenseswidget>
+    </div>
+</mat-card>
+
+
+
+<div class="mat-h1">Fix this rob - this needs to be in an edit screen
+    <div *ngIf="usersAdded">
+        <app-userswidget [props]="usersAdded" [propsChanged]="$usersSubject" (userClicked)="onUserAddedClicked($event)">
+        </app-userswidget>
+    </div>
+
+    <div *ngIf="usersAvailable">
+        <app-userswidget [props]="usersAvailable" [propsChanged]="$usersSubject"
+            (userClicked)="onUserAvailableClicked($event)"></app-userswidget>
+    </div>
+</div>

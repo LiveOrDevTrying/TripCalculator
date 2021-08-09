@@ -1,0 +1,57 @@
+<mat-card class="expenses-container">
+    <mat-card-title>
+        {{ getUsernameFromTripUserId(props.tripUserId) }}
+    </mat-card-title>
+    <mat-card-content>
+        <table>
+            <tr>
+                <th></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            <tr *ngFor="let element of props.expenses">
+                <td>
+                    {{ element.timestampTransaction | date: 'shortDate' }}
+                </td>
+                <td>
+                    {{ element.location }}
+                </td>
+                <td>
+                    ${{ element.amount }}
+                </td>
+                <td>
+                    <button mat-button color="primary" mat-primary (click)="removeExpense(element.id)">Remove</button>
+                </td>
+            </tr>
+            <tr *ngIf="props.canCreateExpense">
+                <td>
+                    <mat-form-field>
+                        <input matInput placeholder="Date" [matDatepicker]="datePicker" [(ngModel)]="expenseDate"
+                            (keyup.enter)="saveExpense()" required>
+                        <mat-datepicker-toggle matSuffix [for]="datePicker"></mat-datepicker-toggle>
+                        <mat-datepicker #datePicker></mat-datepicker>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput class="form-control" placeholder="Location" [(ngModel)]="expenseLocation"
+                            (keyup.enter)="saveExpense()" required />
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input currencyMask matInput class="form-control" placeholder="Amount" [(ngModel)]="expenseAmount"
+                            (keyup.enter)="saveExpense()" required />
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-stroked-button color="primary" mat-primary (click)="saveExpense()">Create</button>
+                </td>
+            </tr>
+        </table>
+
+        <br />
+        <div class="mat-h3">Total: {{ expenseTotal }}</div>
+    </mat-card-content>
+  </mat-card>

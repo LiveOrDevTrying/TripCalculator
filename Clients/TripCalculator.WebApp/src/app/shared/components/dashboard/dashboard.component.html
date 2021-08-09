@@ -1,0 +1,3 @@
+<div *ngFor="let trip of trips">
+    <app-tripuserwidget [props]="getTripUserWidgetData(trip)" [propsChanged]="$tripsSubject" (tripUserClicked)="onTripUserClicked($event)"></app-tripuserwidget>
+</div>

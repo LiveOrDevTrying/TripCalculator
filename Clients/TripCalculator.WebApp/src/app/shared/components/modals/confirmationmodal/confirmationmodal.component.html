@@ -1,0 +1,27 @@
+<mat-card class="mat-card-app">
+    <mat-card-title class="mat-h1 padding-top">
+        {{ data.title }}
+    </mat-card-title>
+    <mat-card-content>
+        {{ data.message }}
+    </mat-card-content>
+    <mat-card-actions>
+        <button
+        mat-stroked-button
+        color="primary"
+        appearance="outlined"
+        (click)="onNoClick()"
+        >
+        {{ data.cancelMessage }}
+        </button>
+        <button
+        mat-raised-button
+        mat-primary
+        color="primary"
+        [mat-dialog-close]="data.isConfirmed"
+        cdkFocusInitial
+        >
+        {{ data.confirmMessage }}
+        </button>
+    </mat-card-actions>
+</mat-card>

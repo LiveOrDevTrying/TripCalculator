@@ -1,0 +1,49 @@
+<ngx-loading [show]="loading"></ngx-loading>
+<div class="background-color-main">
+  <div *ngIf="isAuthenticated">
+    <div *ngIf="isLoaded">
+
+      <div class="mobile-nav-container">
+        <span>
+          <button mat-button class="navbar_element" [routerLink]="['/']">
+            <img class="navbar_logo" src="https://pixelhorrorstudios.s3.us-west-2.amazonaws.com/Itrellis/Logo.png"
+              alt="Trip Calculator Logo" />
+          </button>
+
+          <button mat-button class="navbar_element" [routerLink]="['/']">
+            <mat-icon>dashboard</mat-icon>
+            Dashboard
+          </button>
+
+          <button mat-button class="navbar_element" [routerLink]="['/trips/trips']">
+            <mat-icon>commute</mat-icon>
+            Trips
+          </button>
+
+          <button mat-button class="navbar_element" [routerLink]="['/users/users']">
+            <mat-icon>people</mat-icon>
+            Users
+          </button>
+
+          <button mat-button class="navbar_element" (click)="logout()">
+            <mat-icon>logout</mat-icon>
+            Logout
+          </button>
+        </span>
+      </div>
+    </div>
+
+    <div *ngIf="!isLoaded">
+      <button mat-button class="navbar_element" [routerLink]="['/']">
+        <img src="https://pixelhorrorstudios.s3.us-west-2.amazonaws.com/Itrellis/Logo.png" alt="Trip Calculator Logo" />
+      </button>
+
+      <button mat-button class="navbar_element" (click)="logout()">
+        <mat-icon>logout</mat-icon>
+        Logout
+      </button>
+    </div>
+    <mat-divider></mat-divider>
+  </div>
+  <router-outlet></router-outlet>
+</div>
