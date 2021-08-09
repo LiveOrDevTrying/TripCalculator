@@ -1,4 +1,4 @@
-import { ITrip, IUser } from "src/app/core";
+import { IExpense, ITrip, ITripUser, IUser } from "src/app/core";
 
 export interface IConfirmationModalData {
     title: string;
@@ -18,4 +18,16 @@ export interface ITripsWidgetData {
     title: string;
     canCreateTrip: boolean;
     trips: ITrip[];
+}
+
+export interface ITripUserWidgetData {
+    trip: ITrip;
+    canCreateTripUser: boolean;
+    tripsUsers: ITripUser[];
+}
+
+export interface IExpenseWidgetData {
+    tripUserId: string;
+    canCreateExpense: boolean;
+    expenses: IExpense[];
 }

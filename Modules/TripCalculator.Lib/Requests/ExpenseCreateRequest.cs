@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace TripCalculator.Lib.DTOs
+namespace TripCalculator.Lib.Requests
 {
-    public class ExpenseDTO : BaseDTO
+    public class ExpenseCreateRequest : BaseRequest
     {
         public Guid TripUserId { get; set; }
         public string Location { get; set; }

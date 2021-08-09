@@ -11,6 +11,9 @@ import { ConfirmationmodalComponent } from './modals/confirmationmodal/confirmat
 import { ModulesModule } from '../modules/modules.module';
 import { UserswidgetComponent } from './userswidget/userswidget.component';
 import { TripswidgetComponent } from './tripswidget/tripswidget.component';
+import { TripuserwidgetComponent } from './tripuserwidget/tripuserwidget.component';
+import { ExpenseswidgetComponent } from './expenseswidget/expenseswidget.component';
+import { NgxCurrencyModule } from "ngx-currency";
 
 @NgModule({
   declarations: [
@@ -18,7 +21,9 @@ import { TripswidgetComponent } from './tripswidget/tripswidget.component';
     DashboardComponent,
     ConfirmationmodalComponent,
     UserswidgetComponent,
-    TripswidgetComponent
+    TripswidgetComponent,
+    TripuserwidgetComponent,
+    ExpenseswidgetComponent
   ],
   imports: [
     FormsModule,
@@ -27,7 +32,8 @@ import { TripswidgetComponent } from './tripswidget/tripswidget.component';
     ToastrModule.forRoot(),
     NgxLoadingModule.forRoot({}),
     RouterModule.forChild([]),
-    ModulesModule
+    ModulesModule,
+    NgxCurrencyModule
   ],
   exports: [
     HttpClientModule,
@@ -36,7 +42,8 @@ import { TripswidgetComponent } from './tripswidget/tripswidget.component';
     ToastrModule,
     RouterModule,
     UserswidgetComponent,
-    TripswidgetComponent
+    TripswidgetComponent,
+    ExpenseswidgetComponent
   ],
   entryComponents: [
     ConfirmationmodalComponent

@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace TripCalculator.Lib.DTOs
+namespace TripCalculator.Lib.Requests
 {
-    public class ExpenseDTO : BaseDTO
+    public class ExpenseUpdateRequest : BaseUpdateRequest
     {
-        public Guid TripUserId { get; set; }
         public string Location { get; set; }
         public float Amount { get; set; }
         public DateTime TimestampTransaction { get; set; }

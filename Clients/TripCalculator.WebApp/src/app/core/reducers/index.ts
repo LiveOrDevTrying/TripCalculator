@@ -7,3 +7,5 @@ export * from './trips.reducer';
 export * from './trips.actions';
 export * from './tripsusers.reducer';
 export * from './tripsusers.actions';
+export * from './expenses.reducer';
+export * from './expenses.actions';

@@ -78,12 +78,14 @@ namespace TripCalculator.DAL
                 var users = await GetUsersAsync(applicationUserId);
                 var trips = await GetTripsAsync(applicationUserId);
                 var tripUsers = await GetTripsUsersAsync(trips.Select(x => x.Id).ToArray(), applicationUserId);
+                var expenses = await GetExpensesAsync(tripUsers.Select(x => x.Id).ToArray(), applicationUserId);
 
                 return new Payload
                 {
                     Users = users,
                     Trips = trips,
-                    TripsUsers = tripUsers
+                    TripsUsers = tripUsers,
+                    Expenses = expenses
                 };
             }
             catch (Exception ex)
@@ -437,6 +439,138 @@ namespace TripCalculator.DAL
         }
 
         public Task<TripUserVM> GetTripUserAsync(Guid tripUserId, Guid applicationUserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<ExpenseDTO[]> GetExpensesAsync(Guid[] tripUserIds, Guid applicationUserId)
+        {
+            try
+            {
+                // Verify ownership
+                // ROB: This has quick patch
+                if (await _context.Trips
+                    .Where(x => x.ApplicationUserId == applicationUserId && x.Active)
+                    .Include(x => x.TripUsers)
+                    .Select(x => x.TripUsers)
+                    .AnyAsync(x => x.Any(t => tripUserIds.Contains(t.Id))))
+                {
+                    var entities = await _context.Expenses
+                        .AsNoTracking()
+                        .Where(x => tripUserIds.Contains(x.TripUserId) && x.Active)
+                        .ToListAsync();
+
+                    var dtos = new List<ExpenseDTO>();
+
+                    entities.ForEach(x => dtos.Add(_mapper.Map<ExpenseDTO>(x)));
+
+                    return dtos.OrderByDescending(x => x.TimestampTransaction).ToArray();
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception - GetTripsAsync in DAL");
+                throw ex;
+            }
+        }
+        public async Task<ExpenseDTO[]> GetExpensesAsync(Guid tripUserId, Guid applicationUserId)
+        {
+            try
+            {
+                // Verify ownership
+                if (await _context.Trips
+                    .Where(x => x.ApplicationUserId == applicationUserId && x.Active)
+                    .Include(x => x.TripUsers)
+                    .Select(x => x.TripUsers)
+                    .AnyAsync(x => x.Any(t => t.Id == tripUserId)))
+                {
+                    var entities = await _context.Expenses
+                        .AsNoTracking()
+                        .Where(x => x.TripUserId == tripUserId && x.Active)
+                        .ToListAsync();
+
+                    var dtos = new List<ExpenseDTO>();
+
+                    entities.ForEach(x => dtos.Add(_mapper.Map<ExpenseDTO>(x)));
+
+                    return dtos.OrderByDescending(x => x.TimestampTransaction).ToArray();
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception - GetTripsAsync in DAL");
+                throw ex;
+            }
+        }
+
+        public virtual async Task<ExpenseVM> GetExpenseAsync(Guid expenseId, Guid applicationUserId)
+        {
+            try
+            {
+                if (await _context.Expenses
+                    .Where(x => x.Id == expenseId && x.Active)
+                    .Include(x => x.TripUser)
+                    .Where(x => x.TripUser.Active)
+                    .Include(x => x.TripUser.Trip)
+                    .Where(x => x.TripUser.Trip.Active)
+                    .Select(x => x.TripUser.Trip)
+                    .AnyAsync(x => x.ApplicationUserId == applicationUserId && x.Active))
+                {
+                    var entity = await _context.Expenses.FirstOrDefaultAsync(x => x.Id == expenseId);
+
+                    return new ExpenseVM
+                    {
+                        DTO = _mapper.Map<ExpenseDTO>(entity)
+                    };
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception - CreateTripAsync in DAL");
+                throw ex;
+            }
+        }
+
+        public virtual async Task<ExpenseVM> CreateExpenseAsync(ExpenseCreateRequest request, Guid applicationUserId)
+        {
+            try
+            {
+                if (await _context.TripsUsers
+                    .Where(x => x.Id == request.TripUserId && x.Active)
+                    .Include(x => x.Trip)
+                    .Select(x => x.Trip)
+                    .AnyAsync(x => x.ApplicationUserId == applicationUserId && x.Active))
+                {
+                    var entity = _mapper.Map<Expense>(request);
+                    await _context.Expenses.AddAsync(entity);
+
+                    if (await _context.SaveChangesAsync() > 0)
+                    {
+                        return await GetExpenseAsync(entity.Id, applicationUserId);
+                    }
+                }
+
+                return null;
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Exception - CreateTripAsync in DAL");
+                throw ex;
+            }
+        }
+
+        public Task<ExpenseVM> UpdateExpenseAsync(Guid id, ExpenseUpdateRequest request, Guid applicationUserId)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> DeleteExpenseAsync(Guid id, Guid applicationUserId)
         {
             throw new NotImplementedException();
         }

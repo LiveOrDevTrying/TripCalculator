@@ -5,8 +5,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { ToastrService } from 'ngx-toastr';
 import { Subject, Subscription } from 'rxjs';
-import { AppState, ITrip, IUser } from 'src/app/core';
-import { IUsersWidgetData } from 'src/app/shared';
+import { AppState, IExpense, ITrip, IUser } from 'src/app/core';
+import { IExpenseWidgetData, IUsersWidgetData } from 'src/app/shared';
 import { BaseComponent } from 'src/app/shared/components/base/base.component';
 import { ITripCreateRequest, ITripUpdateRequest, ITripVM } from '../models';
 import { TripService } from '../trip.service';
@@ -34,6 +34,7 @@ export class TripComponent extends BaseComponent implements OnInit, OnDestroy {
   $tripUpdateSubscription: Subscription;
 
   $usersSubject = new Subject();
+  $expensesSubject = new Subject();
   
   constructor(protected store: Store<AppState>,
     protected route: ActivatedRoute,
@@ -91,6 +92,12 @@ export class TripComponent extends BaseComponent implements OnInit, OnDestroy {
     this.assignTrip();
   }
 
+  afterAssignExpenses() {
+    if (this.$expensesSubject) {
+      this.$expensesSubject.next();
+    }
+  }
+
   assignTrip() {
     if (this.id) {
       if (this.trips && this.tripsUsers && !this.trip) {
@@ -129,6 +136,7 @@ export class TripComponent extends BaseComponent implements OnInit, OnDestroy {
         }
       }
     }
+
   }
 
   isTripValid(): boolean {
@@ -185,5 +193,17 @@ export class TripComponent extends BaseComponent implements OnInit, OnDestroy {
     this.usersAvailable.users.push(user);
 
     this.$usersSubject.next();
+  }
+
+  onExpenseClick(expense: IExpense) {
+  }
+
+  getExpenseWidgetDate(tripUserId: string) {
+    const props : IExpenseWidgetData = {
+      tripUserId: tripUserId,
+      canCreateExpense: true,
+      expenses: this.getExpenses(tripUserId)
+    }
+    return props;
   }
 }

@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { AddTrip, AppState, DeleteTrip, GlobalsService, ITrip, ModifyTrip, SetTripsUsers } from 'src/app/core';
+import { AddTrip, AppState, DeleteTrip, GlobalsService, ModifyTrip, SetTripsUsers } from 'src/app/core';
 import { ITripCreateRequest, ITripUpdateRequest, ITripVM } from './models';
 
 @Injectable({
@@ -16,13 +16,11 @@ export class TripService {
   constructor(protected httpClient: HttpClient,
     protected globalsService: GlobalsService,
     protected store: Store<AppState>) { 
-    }
+  }
 
   createTrip(request: ITripCreateRequest) {
     this.httpClient.post<ITripVM>(`${this.globalsService.webapiUri}/trips`, request)
       .subscribe((tripVM: ITripVM) => {
-        console.log(tripVM.dto);
-
         if (tripVM) {
           this.store.dispatch(new AddTrip(tripVM.dto));
           this.store.dispatch(new SetTripsUsers(tripVM.tripsUsers));

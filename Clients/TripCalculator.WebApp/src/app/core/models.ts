@@ -3,6 +3,7 @@ export interface AppState {
     users: IUser[];
     trips: ITrip[];
     tripsUsers: ITripUser[];
+    expenses: IExpense[];
 }
 
 export interface IBaseInterface {
@@ -13,6 +14,7 @@ export interface IPayload extends IBaseInterface {
     users: IUser[];
     trips: ITrip[];
     tripsUsers: ITripUser[];
+    expenses: IExpense[];
 }
 
 export interface IUser extends IBaseInterface {
@@ -28,4 +30,11 @@ export interface ITrip extends IBaseInterface {
 export interface ITripUser extends IBaseInterface {
     tripId: string;
     userId: string;
+}
+
+export interface IExpense extends IBaseInterface {
+    tripUserId: string;
+    location: string;
+    amount: number;
+    timestampTransaction: Date;
 }

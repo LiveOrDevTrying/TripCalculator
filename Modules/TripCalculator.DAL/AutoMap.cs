@@ -15,6 +15,8 @@ namespace TripCalculator.DAL
                 c.CreateMap<ApplicationUserUpdateRequest, ApplicationUser>().ReverseMap();
                 c.CreateMap<ApplicationUser, ApplicationUserDTO>().ReverseMap();
 
+                c.CreateMap<ExpenseCreateRequest, Expense>().ReverseMap();
+                c.CreateMap<ExpenseUpdateRequest, Expense>().ReverseMap();
                 c.CreateMap<Expense, ExpenseDTO>().ReverseMap();
 
                 c.CreateMap<TripCreateRequest, Trip>().ReverseMap();

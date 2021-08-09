@@ -41,12 +41,22 @@
 </mat-card>
 
 
-<div *ngIf="usersAdded">
-    <app-userswidget [props]="usersAdded" [propsChanged]="$usersSubject" (userClicked)="onUserAddedClicked($event)">
-    </app-userswidget>
-</div>
+<mat-card>
+    <div *ngFor="let tripUser of getTripUsers(id)">
+        <app-expenseswidget [props]="getExpenseWidgetDate(tripUser.id)" [propsChanged]="$expensesSubject" (expenseClicked)="onExpenseClick($event)"></app-expenseswidget>
+    </div>
+</mat-card>
 
-<div *ngIf="usersAvailable">
-    <app-userswidget [props]="usersAvailable" [propsChanged]="$usersSubject"
-        (userClicked)="onUserAvailableClicked($event)"></app-userswidget>
+
+
+<div class="mat-h1">Fix this rob - this needs to be in an edit screen
+    <div *ngIf="usersAdded">
+        <app-userswidget [props]="usersAdded" [propsChanged]="$usersSubject" (userClicked)="onUserAddedClicked($event)">
+        </app-userswidget>
+    </div>
+
+    <div *ngIf="usersAvailable">
+        <app-userswidget [props]="usersAvailable" [propsChanged]="$usersSubject"
+            (userClicked)="onUserAvailableClicked($event)"></app-userswidget>
+    </div>
 </div>

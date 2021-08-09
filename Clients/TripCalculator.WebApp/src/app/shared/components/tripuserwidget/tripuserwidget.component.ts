@@ -4,31 +4,30 @@ import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
 import { Subject, Subscription } from 'rxjs';
-import { AppState, ITrip } from 'src/app/core';
+import { AppState, ITripUser } from 'src/app/core';
 import { BaseComponent } from '../base/base.component';
-import { ITripsWidgetData } from '../models';
+import { ITripUserWidgetData } from '../models';
 
 @Component({
-  selector: 'app-tripswidget',
-  templateUrl: './tripswidget.component.html',
-  styleUrls: ['./tripswidget.component.scss']
+  selector: 'app-tripuserwidget',
+  templateUrl: './tripuserwidget.component.html',
+  styleUrls: ['./tripuserwidget.component.scss']
 })
-export class TripswidgetComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() props: ITripsWidgetData;
+export class TripuserwidgetComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
+  @Input() props: ITripUserWidgetData;
   @Input() propsChanged: Subject<any>;
-  @Output() tripClicked = new EventEmitter<ITrip>();
+  @Output() tripUserClicked = new EventEmitter<ITripUser>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
   @ViewChild(MatSort) sort: MatSort;
 
   displayedColumns: string[] = [
-    'tripName',
-    'startDate',
-    'endDate',
-    'userCount'
+    'username',
+    'txCount',
+    'expensesForTripUser'
   ];
 
-  dataSource = new MatTableDataSource<ITrip>();
+  dataSource = new MatTableDataSource<ITripUser>();
 
   $propsChangedSubscription: Subscription;
 
@@ -39,10 +38,10 @@ export class TripswidgetComponent extends BaseComponent implements OnInit, After
   ngOnInit() {
     this.$propsChangedSubscription = this.propsChanged
       .subscribe(x => {
-        this.afterAssignTrips();
+        this.afterAssignTripsUsers();
       });
       
-    this.afterAssignTrips();
+    this.afterAssignTripsUsers();
   }
 
   ngAfterViewInit() {
@@ -56,17 +55,17 @@ export class TripswidgetComponent extends BaseComponent implements OnInit, After
   }
 
   
-  rowClickedEvent(trip: ITrip) {
-    this.tripClicked.next(trip);
+  rowClickedEvent(tripUser: ITripUser) {
+    this.tripUserClicked.next(tripUser);
   }
 
-  afterAssignTrips() {
+  afterAssignTripsUsers() {
     if (this.dataSource) {
-      this.dataSource.data = this.props.trips;
+      this.dataSource.data = this.props.tripsUsers;
     }
   }
 
-  createTrip() {
+  createTripUser() {
     alert('not yet implemented');
   }
 }
