@@ -30,7 +30,7 @@ export class ModifyUser implements Action {
 export class DeleteUser implements Action {
     readonly type = DELETE_USER;
 
-    constructor(public id: number) {
+    constructor(public id: string) {
     }
 }
 

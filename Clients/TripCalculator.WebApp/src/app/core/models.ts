@@ -4,7 +4,7 @@ export interface AppState {
 }
 
 export interface IBaseInterface {
-    id: number;
+    id: string;
 }
 
 export interface IPayload extends IBaseInterface {
@@ -13,4 +13,11 @@ export interface IPayload extends IBaseInterface {
 
 export interface IUser extends IBaseInterface {
     username: string;
+}
+
+export interface IRequest {
+}
+
+export interface IRequestUpdate extends IRequest {
+    id: string;
 }

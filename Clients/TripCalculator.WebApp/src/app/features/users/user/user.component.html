@@ -1,0 +1,57 @@
+<mat-card class="user-container">
+    <mat-card>
+      <ngx-loading [show]="loading"></ngx-loading>
+      <mat-card-title>
+        User
+      </mat-card-title>
+      <mat-card-content>
+        <mat-form-field>
+            <input
+              matInput
+              class="form-control"
+              placeholder="Username"
+              [(ngModel)]="username"
+              (keyup.enter)="saveUser()"
+            />
+          </mat-form-field>
+          <br />
+      </mat-card-content>
+      <mat-card-footer>
+        <button
+          mat-primary
+          color="primary"
+          type="button"
+          id="back"
+          mat-stroked-button
+          (click)="back()"
+        >
+          Back
+        </button>
+        <button
+          *ngIf="id === undefined ||
+            id === null ||
+            id === ''"
+          mat-raised-button
+          color="primary"
+          type="button"
+          mat-stroked-button
+          (click)="saveUser()"
+        >
+          Create User
+        </button>
+        <button
+            *ngIf="id !== undefined &&
+            id !== null &&
+            id !== ''"
+            mat-raised-button
+            color="primary"
+            type="button"
+            mat-stroked-button
+            (click)="saveUser()"
+        >
+            Update User
+        </button>
+      </mat-card-footer>
+    </mat-card>
+  </mat-card>
+  

@@ -1,2 +1,4 @@
 export * from './components.module';
-export * from './home/home.component';
+export * from './dashboard/dashboard.component';
+export * from './modals/confirmationmodal/confirmationmodal.component'
+export * from './models';

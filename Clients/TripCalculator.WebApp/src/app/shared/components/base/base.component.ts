@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
 import { AppState, IUser } from 'src/app/core';
@@ -8,7 +8,7 @@ import { AppState, IUser } from 'src/app/core';
   templateUrl: './base.component.html',
   styleUrls: ['./base.component.scss']
 })
-export class BaseComponent implements OnInit {
+export class BaseComponent implements OnDestroy {
   users: IUser[] = [];
 
   $usersSubscription: Subscription;
@@ -18,13 +18,15 @@ export class BaseComponent implements OnInit {
       .select(x => x.users)
       .subscribe((users: IUser[]) => {
         this.users = users;
-        console.log(this.users);
-        alert('done!');
+        this.afterAssignUsers();
       }
     );
   }
 
-  ngOnInit(): void {
+  ngOnDestroy() {
+    this.$usersSubscription.unsubscribe();
   }
 
+  afterAssignUsers() {
+  }
 }

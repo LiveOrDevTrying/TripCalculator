@@ -1,14 +1,10 @@
 import { NgModule } from '@angular/core';
-
 import { FeaturesRoutingModule } from './features-routing.module';
-import { SharedModule } from '../shared';
-import { ReducersModule } from '../core';
-import { UsersComponent } from './users/users.component';
-
+import { SharedModule } from 'src/app/shared';
+import { ReducersModule } from 'src/app/core';
 
 @NgModule({
   declarations: [
-    UsersComponent
   ],
   imports: [
     FeaturesRoutingModule,

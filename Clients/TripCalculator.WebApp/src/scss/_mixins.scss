@@ -1,0 +1,12 @@
+@import "_variables.scss";
+
+@mixin matCard() {
+    @include paddingSimple();
+}
+@mixin paddingSimple() {
+    padding: 10px 10px 10px 10px !important;
+}
+@mixin border() {
+    border: $border-width;
+    border-style: $border-style;
+}

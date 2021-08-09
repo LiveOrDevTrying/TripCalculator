@@ -5,13 +5,16 @@ import { RouterModule } from '@angular/router';
 import { CoreModule } from 'src/app/core/core.module';
 import { ToastrModule } from 'ngx-toastr';
 import { NgxLoadingModule } from 'ngx-loading';
-import { HomeComponent } from './home/home.component';
 import { BaseComponent } from './base/base.component';
+import { DashboardComponent } from './dashboard/dashboard.component';
+import { ConfirmationmodalComponent } from './modals/confirmationmodal/confirmationmodal.component';
+import { ModulesModule } from '../modules/modules.module';
 
 @NgModule({
   declarations: [
-    HomeComponent,
-    BaseComponent
+    BaseComponent,
+    DashboardComponent,
+    ConfirmationmodalComponent
   ],
   imports: [
     FormsModule,
@@ -20,6 +23,7 @@ import { BaseComponent } from './base/base.component';
     ToastrModule.forRoot(),
     NgxLoadingModule.forRoot({}),
     RouterModule.forChild([]),
+    ModulesModule
   ],
   exports: [
     HttpClientModule,
@@ -27,6 +31,9 @@ import { BaseComponent } from './base/base.component';
     NgxLoadingModule,
     ToastrModule,
     RouterModule
+  ],
+  entryComponents: [
+    ConfirmationmodalComponent
   ]
 })
 export class ComponentsModule { }

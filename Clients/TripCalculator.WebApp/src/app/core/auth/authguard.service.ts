@@ -15,6 +15,8 @@ export class AuthguardService implements CanActivate {
     private http: HttpService) { }
 
     canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): boolean {
+      return true;
+      
       // Check to see if we have an application user
       // If we dont, we navigate to [/]
       if (this.oauthService.hasValidAccessToken() &&

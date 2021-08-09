@@ -343,9 +343,9 @@ namespace TripCalculator.DAL
                     .Where(x => x.TripId == tripEntity.Id && x.Active)
                     .ToListAsync();
 
-                var dtos = new List<TripDTO>();
+                var dtos = new List<TripUserDTO>();
 
-                entities.ForEach(x => dtos.Add(_mapper.Map<TripDTO>(x)));
+                entities.ForEach(x => dtos.Add(_mapper.Map<TripUserDTO>(x)));
 
                 return dtos.ToArray();
             }
