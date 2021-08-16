@@ -6,6 +6,6 @@ namespace TripCalculator.Lib.DTOs
     {
         public Guid Id { get; set; } = Guid.NewGuid();
 
-        public DateTime Timestamp { get; set; }
+        public DateTime Timestamp { get; set; } = DateTime.UtcNow;
     }
 }

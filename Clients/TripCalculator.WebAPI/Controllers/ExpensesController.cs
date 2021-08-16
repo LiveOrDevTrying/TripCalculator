@@ -6,6 +6,7 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Net.Http;
 using System.Threading.Tasks;
+using TripCalculator.BLL;
 using TripCalculator.DAL;
 using TripCalculator.Lib.DTOs;
 using TripCalculator.Lib.Requests;
@@ -15,13 +16,17 @@ namespace TripCalculator.WebAPI.Controllers
 {
     public class ExpensesController : BaseController<ExpensesController>
     {
+        protected readonly IBLL _bll;
+
         public ExpensesController(
             ILogger<ExpensesController> logger,
             IDAL dal,
+            IBLL bll,
             IHttpClientFactory clientFactory,
             IOptions<URIs> uris)
             : base(logger, dal, clientFactory, uris)
         {
+            _bll = bll;
         }
 
         /// <summary>
@@ -69,7 +74,7 @@ namespace TripCalculator.WebAPI.Controllers
             {
                 var applicationUser = await GetApplicationUserAsync();
 
-                var expense = await _dal.GetExpenseAsync(id, applicationUser.Id);
+                var expense = await _bll.GetExpenseAsync(id, applicationUser.Id);
 
                 if (expense != null)
                 {
@@ -105,7 +110,7 @@ namespace TripCalculator.WebAPI.Controllers
             {
                 var applicationUser = await GetApplicationUserAsync();
 
-                var expense = await _dal.CreateExpenseAsync(request, applicationUser.Id);
+                var expense = await _bll.CreateExpenseAsync(request, applicationUser.Id);
 
                 if (expense != null)
                 {
@@ -141,7 +146,7 @@ namespace TripCalculator.WebAPI.Controllers
             {
                 var applicationUser = await GetApplicationUserAsync();
 
-                var expense = await _dal.UpdateExpenseAsync(id, request, applicationUser.Id);
+                var expense = await _bll.UpdateExpenseAsync(id, request, applicationUser.Id);
 
                 if (expense != null)
                 {

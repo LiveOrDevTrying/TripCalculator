@@ -2,7 +2,7 @@
 
 namespace TripCalculator.Lib.ViewModels
 {
-    public class ExpenseVM : BaseVM<ExpenseDTO>
+    public class PayloadVM : PayloadDTO
     {
         public TripUserReimburseDTO[] TripUsersReimburse { get; set; }
     }

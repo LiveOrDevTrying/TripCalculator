@@ -9,7 +9,7 @@ export function expensesReducer(state: IExpense[] = [], action: ExpensesActions.
         case ExpensesActions.ADD_EXPENSE:
             let addExpenseNewState = state.concat((<ExpensesActions.AddExpense>action).expense);
             addExpenseNewState = addExpenseNewState.sort((a, b) => {
-                if (a.timestampTransaction > b.timestampTransaction) {
+                if (a.timestampTransaction < b.timestampTransaction) {
                     return 1;
                 } else {
                     return -1;

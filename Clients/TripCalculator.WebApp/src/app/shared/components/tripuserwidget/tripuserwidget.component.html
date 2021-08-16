@@ -1,43 +1,59 @@
-<mat-card class="trips-container">
-    <mat-card-title>
-        <a [routerLink]="['/trips/trip', props.trip.id]">{{ props.trip.tripName }}</a>
-    </mat-card-title>
-    <button *ngIf="props.canCreateTripUser" mat-button color="primary" mat-primary (click)="createTripUser()">Create Trip User</button>
-    <br />
-    <mat-card-content>
-        <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
-            <ng-container matColumnDef="username">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Username
-            </th>
-            <td mat-cell *matCellDef="let element">
-                <a [routerLink]="['/tripsUsers/tripUser', element.id]">{{ getUsernameFromTripUserId(element.id) }}</a>
-            </td>
-            </ng-container>
+<div style="display:flex;flex-direction:column;height:100%;object-fit:cover">
+    <mat-card class="trip-user-container" fxFlex="100%">
+        <mat-card-title>
+            <a [routerLink]="['/trips/trip', trip.id]">{{ trip.tripName }}</a>
+        </mat-card-title>
+        <mat-card-content>
+            <button *ngIf="canCreateTripUser" mat-button color="primary" mat-primary (click)="createTripUser()">Create
+                Trip User</button>
+            <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">
+                <ng-container matColumnDef="username">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Username
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        <a [routerLink]="['/users/user', element.userId]">{{
+                            getUsernameFromTripUserId(element.id)
+                            }}</a>
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="txCount">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Transactions
-            </th>
-            <td mat-cell *matCellDef="let element">
-                {{ getTxCount(element.id) }}
-            </td>
-            </ng-container>
+                <ng-container matColumnDef="txCount">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Transactions
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ getTxCount(element.id) }}
+                    </td>
+                </ng-container>
 
-            <ng-container matColumnDef="expensesForTripUser">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header>
-                Expenses Total
-            </th>
-            <td mat-cell *matCellDef="let element">
-                {{ getExpensesTotalForTripUser(element.id) }}
-            </td>
-            </ng-container>
+                <ng-container matColumnDef="expensesForTripUser">
+                    <th mat-header-cell *matHeaderCellDef mat-sort-header>
+                        Expenses Total
+                    </th>
+                    <td mat-cell *matCellDef="let element">
+                        {{ getExpensesTotalForTripUser(element.id) | currency }}
+                    </td>
+                </ng-container>
 
-            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-            <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
-        </table>
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+            </table>
 
-        <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons #paginator class="table-paginator">
-        </mat-paginator>
-    </mat-card-content>
-  </mat-card>
+            <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons #paginator class="table-paginator">
+            </mat-paginator>
+            <div *ngIf="selectedTripUsers.length > 0 && getExpensesTotalForTrip(trip.id) > 0">
+                <div class="mat-h3">Total Cost Per User: {{ getExpensesTotalForTrip(trip.id) / selectedTripUsers.length
+                    |
+                    currency }}</div>
+                <ul>
+                    <div *ngFor="let reimburse of selectedTripUsersReimburse">
+                        <li>{{ getUsernameFromTripUserId(reimburse.tripUserId) }} owes {{
+                            getUsernameFromTripUserId(reimburse.owingTripUserId) }} {{ reimburse.amount | currency}}
+                        </li>
+                    </div>
+                </ul>
+            </div>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subscription } from 'rxjs';
-import { AppState, IExpense, ITrip, ITripUser, IUser } from 'src/app/core';
+import { AppState, IExpense, ITrip, ITripUser, ITripUserReimburse, IUser } from 'src/app/core';
 
 @Component({
   selector: 'app-base',
@@ -13,11 +13,13 @@ export class BaseComponent implements OnDestroy {
   trips: ITrip[] = [];
   tripsUsers: ITripUser[] = [];
   expenses: IExpense[] = [];
+  tripsUsersReimburse: ITripUserReimburse[] = [];
 
   $usersSubscription: Subscription;
   $tripsSubscription: Subscription;
   $tripsUsersSubscription: Subscription;
   $expensesSubscription: Subscription;
+  $tripsUsersReimburseSubscription: Subscription;
 
   constructor(protected store: Store<AppState>) { 
     this.$usersSubscription = this.store
@@ -51,6 +53,13 @@ export class BaseComponent implements OnDestroy {
         this.afterAssignExpenses();
       }
     );
+
+    this.$tripsUsersReimburseSubscription = this.store
+      .select(x => x.tripUsersReimburse)
+      .subscribe((tripsUsersReimburse: ITripUserReimburse[]) => {
+        this.tripsUsersReimburse = tripsUsersReimburse;
+        this.afterAssignTripsUsersReimburse();
+      });
   }
 
   ngOnDestroy() {
@@ -58,6 +67,7 @@ export class BaseComponent implements OnDestroy {
     this.$tripsSubscription.unsubscribe();
     this.$tripsUsersSubscription.unsubscribe();
     this.$expensesSubscription.unsubscribe();
+    this.$tripsUsersReimburseSubscription.unsubscribe();
   }
 
   afterAssignUsers() {
@@ -70,6 +80,9 @@ export class BaseComponent implements OnDestroy {
   }
 
   afterAssignExpenses() {
+  }
+
+  afterAssignTripsUsersReimburse() {
   }
   
   getUserCount(tripId: string): number {
@@ -110,6 +123,19 @@ export class BaseComponent implements OnDestroy {
 
     this.expenses.filter(x => x.tripUserId === tripUserId)
       .map(x => x.amount)
+      .forEach(x => {
+        total += x;
+      });
+
+      return total;
+  }
+
+  getExpensesTotalForTrip(tripId: string): number {
+    let total = 0;
+
+    this.tripsUsers
+      .filter(x => x.tripId === tripId)
+      .map(x => this.getExpensesTotalForTripUser(x.id))
       .forEach(x => {
         total += x;
       });

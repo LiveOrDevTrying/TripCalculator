@@ -11,7 +11,7 @@ namespace TripCalculator.DAL
         Task<ApplicationUserDTO> GetApplicationUserAsync(string aspNetUserId);
         Task<ApplicationUserDTO> CreateApplicationUserAsync(ApplicationUserCreateRequest request, string aspNetUserId);
 
-        Task<Payload> GetPayloadAsync(Guid applicationUserId);
+        Task<PayloadDTO> GetPayloadAsync(Guid applicationUserId);
 
         Task<UserDTO[]> GetUsersAsync(Guid applicationUserId);
         Task<UserVM> GetUserAsync(Guid userId, Guid applicationUserId);
@@ -26,16 +26,16 @@ namespace TripCalculator.DAL
         Task<bool> DeleteTripAsync(Guid id, Guid applicationUserId);
 
         Task<TripUserDTO[]> GetTripsUsersAsync(Guid[] tripIds, Guid applicationUserId);
-        Task<TripUserDTO[]> GetTripsUsersAsync(Guid tripId, Guid applicationUserId);
-        Task<TripUserVM> GetTripUserAsync(Guid tripUserId, Guid applicationUserId);
-        Task<TripDTO> CreateTripUserAsync(TripUserCreateRequest request, Guid applicationUserId);
+        Task<TripUserDTO[]> GetTripUsersAsync(Guid tripId, Guid applicationUserId);
+        Task<TripUserDTO> GetTripUserAsync(Guid tripUserId, Guid applicationUserId);
+        Task<TripUserDTO> CreateTripUserAsync(TripUserCreateRequest request, Guid applicationUserId);
         Task<bool> DeleteTripUserAsync(Guid id, Guid applicationUserId);
 
         Task<ExpenseDTO[]> GetExpensesAsync(Guid[] tripUserIds, Guid applicationUserId);
         Task<ExpenseDTO[]> GetExpensesAsync(Guid tripUserId, Guid applicationUserId);
-        Task<ExpenseVM> GetExpenseAsync(Guid expenseId, Guid applicationUserId);
-        Task<ExpenseVM> CreateExpenseAsync(ExpenseCreateRequest request, Guid applicationUserId);
-        Task<ExpenseVM> UpdateExpenseAsync(Guid id, ExpenseUpdateRequest request, Guid applicationUserId);
+        Task<ExpenseDTO> GetExpenseAsync(Guid expenseId, Guid applicationUserId);
+        Task<ExpenseDTO> CreateExpenseAsync(ExpenseCreateRequest request, Guid applicationUserId);
+        Task<ExpenseDTO> UpdateExpenseAsync(Guid id, ExpenseUpdateRequest request, Guid applicationUserId);
         Task<bool> DeleteExpenseAsync(Guid id, Guid applicationUserId);
     }
 }

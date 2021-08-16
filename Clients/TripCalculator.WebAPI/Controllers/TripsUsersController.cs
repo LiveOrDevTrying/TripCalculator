@@ -39,7 +39,7 @@ namespace TripCalculator.WebAPI.Controllers
             {
                 var applicationUser = await GetApplicationUserAsync();
 
-                var tripsUsers = await _dal.GetTripsUsersAsync(id, applicationUser.Id);
+                var tripsUsers = await _dal.GetTripUsersAsync(id, applicationUser.Id);
 
                 if (tripsUsers != null)
                 {

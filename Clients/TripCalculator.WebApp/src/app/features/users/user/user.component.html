@@ -26,7 +26,7 @@
   </mat-card-footer>
 </mat-card>
 
-<div *ngIf="tripsWidgetData">
-  <app-tripswidget [props]="tripsWidgetData" [propsChanged]="$tripsSubject" (tripClicked)="onTripClicked($event)">
+<div *ngIf="id">
+  <app-tripswidget [userId]="id" [title]="'Users Trips'">
   </app-tripswidget>
 </div>

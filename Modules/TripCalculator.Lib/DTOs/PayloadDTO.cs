@@ -1,8 +1,8 @@
 ﻿using TripCalculator.Lib.DTOs;
 
-namespace TripCalculator.Lib.Requests
+namespace TripCalculator.Lib.DTOs
 {
-    public class Payload
+    public class PayloadDTO
     {
         public UserDTO[] Users { get; set; }
         public TripDTO[] Trips { get; set; }

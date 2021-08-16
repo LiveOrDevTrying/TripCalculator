@@ -2,6 +2,7 @@
 using TripCalculator.Domain.Lib;
 using TripCalculator.Lib.DTOs;
 using TripCalculator.Lib.Requests;
+using TripCalculator.Lib.ViewModels;
 
 namespace TripCalculator.DAL
 {
@@ -11,6 +12,8 @@ namespace TripCalculator.DAL
         {
             return new MapperConfiguration(c =>
             {
+                c.CreateMap<PayloadDTO, PayloadVM>().ReverseMap();
+
                 c.CreateMap<ApplicationUserCreateRequest, ApplicationUser>().ReverseMap();
                 c.CreateMap<ApplicationUserUpdateRequest, ApplicationUser>().ReverseMap();
                 c.CreateMap<ApplicationUser, ApplicationUserDTO>().ReverseMap();

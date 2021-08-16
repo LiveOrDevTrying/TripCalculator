@@ -1,8 +1,8 @@
 <mat-card class="trips-container">
     <mat-card-title>
-        {{ props.title }}
+        {{ title }}
     </mat-card-title>
-    <button *ngIf="props.canCreateTrip" mat-button color="primary" mat-primary (click)="createTrip()">Create Trip</button>
+    <button *ngIf="canCreateTrip" mat-button color="primary" mat-primary (click)="createTrip()">Create Trip</button>
     <br />
     <mat-card-content>
         <table mat-table matSort [dataSource]="dataSource" class="mat-elevation-z8">

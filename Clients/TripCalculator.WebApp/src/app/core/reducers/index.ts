@@ -9,3 +9,5 @@ export * from './tripsusers.reducer';
 export * from './tripsusers.actions';
 export * from './expenses.reducer';
 export * from './expenses.actions';
+export * from './tripusersreimburse.reducer';
+export * from './tripusersreimburse.actions';

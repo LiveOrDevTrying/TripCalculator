@@ -14,6 +14,7 @@ import { TripswidgetComponent } from './tripswidget/tripswidget.component';
 import { TripuserwidgetComponent } from './tripuserwidget/tripuserwidget.component';
 import { ExpenseswidgetComponent } from './expenseswidget/expenseswidget.component';
 import { NgxCurrencyModule } from "ngx-currency";
+import { FlexLayoutModule } from '@angular/flex-layout';
 
 @NgModule({
   declarations: [
@@ -33,7 +34,8 @@ import { NgxCurrencyModule } from "ngx-currency";
     NgxLoadingModule.forRoot({}),
     RouterModule.forChild([]),
     ModulesModule,
-    NgxCurrencyModule
+    NgxCurrencyModule,
+    FlexLayoutModule
   ],
   exports: [
     HttpClientModule,
@@ -41,6 +43,7 @@ import { NgxCurrencyModule } from "ngx-currency";
     NgxLoadingModule,
     ToastrModule,
     RouterModule,
+    FlexLayoutModule,
     UserswidgetComponent,
     TripswidgetComponent,
     ExpenseswidgetComponent

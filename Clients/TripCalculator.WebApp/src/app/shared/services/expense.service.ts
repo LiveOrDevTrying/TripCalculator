@@ -2,7 +2,7 @@ import { HttpClient, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable, Subject } from 'rxjs';
-import { AddExpense, AppState, DeleteExpense, GlobalsService, ModifyExpense } from 'src/app/core';
+import { AddExpense, AppState, DeleteExpense, GlobalsService, ModifyExpense, SetTripUserReimburses } from 'src/app/core';
 import { IExpenseCreateRequest, IExpenseUpdateRequest, IExpenseVM } from './models';
 
 @Injectable({
@@ -22,6 +22,7 @@ export class ExpenseService {
       .subscribe((expenseVM: IExpenseVM) => {
         if (expenseVM) {
           this.store.dispatch(new AddExpense(expenseVM.dto));
+          this.store.dispatch(new SetTripUserReimburses(expenseVM.tripUsersReimburse));
         }
 
         this.$expenseCreateSubject.next(expenseVM);
@@ -33,6 +34,7 @@ export class ExpenseService {
       .subscribe((expenseVM: IExpenseVM) => {
         if (expenseVM) {
           this.store.dispatch(new ModifyExpense(expenseVM.dto));
+          this.store.dispatch(new SetTripUserReimburses(expenseVM.tripUsersReimburse));
         }
 
         this.$expenseUpdateSubject.next(expenseVM);

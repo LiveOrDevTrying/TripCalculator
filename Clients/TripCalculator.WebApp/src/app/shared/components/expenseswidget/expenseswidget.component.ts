@@ -1,22 +1,21 @@
-import { AfterViewInit, Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
 import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { Subject, Subscription } from 'rxjs';
+import { ToastrService } from 'ngx-toastr';
+import { Subscription } from 'rxjs';
 import { AppState, IExpense } from 'src/app/core';
-import { ExpenseService, IExpenseCreateRequest } from '../../services';
+import { ExpenseService, IExpenseCreateRequest, IExpenseVM } from '../../services';
 import { BaseComponent } from '../base/base.component';
-import { IExpenseWidgetData } from '../models';
 
 @Component({
   selector: 'app-expenseswidget',
   templateUrl: './expenseswidget.component.html',
   styleUrls: ['./expenseswidget.component.scss']
 })
-export class ExpenseswidgetComponent extends BaseComponent implements OnInit, OnDestroy {
-  @Input() props: IExpenseWidgetData;
-  @Input() propsChanged: Subject<any>;
+export class ExpenseswidgetComponent extends BaseComponent implements OnInit {
+  @Input() tripUserId: string;
+  @Input() canCreateExpense = false;
   @Output() expenseClicked = new EventEmitter<IExpense>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -33,27 +32,35 @@ export class ExpenseswidgetComponent extends BaseComponent implements OnInit, On
   expenseAmount: number;
   expenseTotal: number;
 
-  expenses: IExpense[] = [];
+  expensesTripUser: IExpense[] = [];
 
-  $propsChangedSubscription: Subscription;
+  $expenseCreateSubscription: Subscription;
 
   constructor(protected store: Store<AppState>,
-    protected expenseService: ExpenseService) {
+    protected expenseService: ExpenseService,
+    protected toastrService: ToastrService) {
     super(store);
+
+    this.$expenseCreateSubscription = this.expenseService
+      .getCreateExpense()
+      .subscribe((x: IExpenseVM) => {
+        if (x) {
+          this.expenseDate = undefined;
+          this.expenseLocation = undefined;
+          this.expenseAmount = undefined;
+        } else {
+          this.toastrService.error('Could not create expense. Please try again later.');
+        }
+      });
   }
 
   ngOnInit() {
-    this.$propsChangedSubscription = this.propsChanged
-      .subscribe(x => {
-        this.afterAssignExpenses();
-      });
-      
     this.afterAssignExpenses();
   }
-  
+
   ngOnDestroy() {
     super.ngOnDestroy();
-    this.$propsChangedSubscription.unsubscribe();
+    this.$expenseCreateSubscription.unsubscribe();
   }
 
   rowClickedEvent(expense: IExpense) {
@@ -61,9 +68,8 @@ export class ExpenseswidgetComponent extends BaseComponent implements OnInit, On
   }
 
   afterAssignExpenses() {
-    if (this.props) {
-      this.expenseTotal = this.getExpensesTotalForTripUser(this.props.tripUserId);
-    }
+    this.expensesTripUser = this.getExpenses(this.tripUserId);
+    this.expenseTotal = this.getExpensesTotalForTripUser(this.tripUserId);
   }
 
   saveExpense() {
@@ -71,7 +77,7 @@ export class ExpenseswidgetComponent extends BaseComponent implements OnInit, On
       timestampTransaction: this.expenseDate,
       location: this.expenseLocation,
       amount: this.expenseAmount,
-      tripUserId: this.props.tripUserId
+      tripUserId: this.tripUserId
     }
 
     this.expenseService.createExpense(request);

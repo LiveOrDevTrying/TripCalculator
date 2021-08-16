@@ -23,7 +23,7 @@ export class TripService {
       .subscribe((tripVM: ITripVM) => {
         if (tripVM) {
           this.store.dispatch(new AddTrip(tripVM.dto));
-          this.store.dispatch(new SetTripsUsers(tripVM.tripsUsers));
+          this.store.dispatch(new SetTripsUsers(tripVM.tripUsers));
         }
 
         this.$tripCreateSubject.next(tripVM);
@@ -35,7 +35,7 @@ export class TripService {
       .subscribe((tripVM: ITripVM) => {
         if (tripVM) {
           this.store.dispatch(new ModifyTrip(tripVM.dto));
-          this.store.dispatch(new SetTripsUsers(tripVM.tripsUsers));
+          this.store.dispatch(new SetTripsUsers(tripVM.tripUsers));
         }
 
         this.$tripUpdateSubject.next(tripVM);

@@ -1,4 +1,4 @@
-import { IBaseInterface, IExpense } from "src/app/core";
+import { IBaseInterface, IExpense, ITripUserReimburse } from "src/app/core";
 import { IRequest, IRequestUpdate } from "src/app/features";
 
 export interface IExpenseCreateRequest extends IRequest {
@@ -16,4 +16,5 @@ export interface IExpenseUpdateRequest extends IRequestUpdate {
 
 export interface IExpenseVM extends IBaseInterface {
     dto: IExpense;
+    tripUsersReimburse: ITripUserReimburse[];
 }

@@ -1,6 +1,6 @@
 <mat-card class="expenses-container">
     <mat-card-title>
-        {{ getUsernameFromTripUserId(props.tripUserId) }}
+        {{ getUsernameFromTripUserId(tripUserId) }}
     </mat-card-title>
     <mat-card-content>
         <table>
@@ -10,7 +10,7 @@
                 <th></th>
                 <th></th>
             </tr>
-            <tr *ngFor="let element of props.expenses">
+            <tr *ngFor="let element of expensesTripUser">
                 <td>
                     {{ element.timestampTransaction | date: 'shortDate' }}
                 </td>
@@ -18,13 +18,13 @@
                     {{ element.location }}
                 </td>
                 <td>
-                    ${{ element.amount }}
+                    {{ element.amount | currency }}
                 </td>
                 <td>
                     <button mat-button color="primary" mat-primary (click)="removeExpense(element.id)">Remove</button>
                 </td>
             </tr>
-            <tr *ngIf="props.canCreateExpense">
+            <tr *ngIf="canCreateExpense">
                 <td>
                     <mat-form-field>
                         <input matInput placeholder="Date" [matDatepicker]="datePicker" [(ngModel)]="expenseDate"
@@ -52,6 +52,6 @@
         </table>
 
         <br />
-        <div class="mat-h3">Total: {{ expenseTotal }}</div>
+        <div class="mat-h3">Total: {{ expenseTotal | currency}}</div>
     </mat-card-content>
   </mat-card>

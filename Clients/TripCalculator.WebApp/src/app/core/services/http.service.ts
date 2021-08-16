@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { AppState, IPayload } from '../models';
-import { SetExpenses, SetTrips, SetTripsUsers, SetUsers } from '../reducers';
+import { SetExpenses, SetTrips, SetTripsUsers, SetTripUserReimbursesAll, SetUsers } from '../reducers';
 import { GlobalsService } from './globals.service';
 
 @Injectable({
@@ -22,6 +22,7 @@ export class HttpService {
         this.store.dispatch(new SetTrips(payload.trips));
         this.store.dispatch(new SetTripsUsers(payload.tripsUsers));
         this.store.dispatch(new SetExpenses(payload.expenses));
+        this.store.dispatch(new SetTripUserReimbursesAll(payload.tripUsersReimburse));
         this.isPayloadReceived = true;
       });
   }

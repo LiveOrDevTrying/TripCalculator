@@ -17,5 +17,5 @@ export interface ITripUpdateRequest extends IRequestUpdate {
 
 export interface ITripVM extends IBaseInterface {
     dto: ITrip;
-    tripsUsers: ITripUser[];
+    tripUsers: ITripUser[];
 }

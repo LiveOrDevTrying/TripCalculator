@@ -43,10 +43,9 @@
 
 <mat-card>
     <div *ngFor="let tripUser of getTripUsers(id)">
-        <app-expenseswidget [props]="getExpenseWidgetDate(tripUser.id)" [propsChanged]="$expensesSubject" (expenseClicked)="onExpenseClick($event)"></app-expenseswidget>
+        <app-expenseswidget [tripUserId]="tripUser.id" [canCreateExpense]="true"></app-expenseswidget>
     </div>
 </mat-card>
-
 
 
 <div class="mat-h1">Fix this rob - this needs to be in an edit screen

@@ -3,19 +3,18 @@ import { MatPaginator } from '@angular/material/paginator';
 import { MatSort } from '@angular/material/sort';
 import { MatTableDataSource } from '@angular/material/table';
 import { Store } from '@ngrx/store';
-import { Subject, Subscription } from 'rxjs';
 import { AppState, ITrip } from 'src/app/core';
 import { BaseComponent } from '../base/base.component';
-import { ITripsWidgetData } from '../models';
 
 @Component({
   selector: 'app-tripswidget',
   templateUrl: './tripswidget.component.html',
   styleUrls: ['./tripswidget.component.scss']
 })
-export class TripswidgetComponent extends BaseComponent implements OnInit, AfterViewInit, OnDestroy {
-  @Input() props: ITripsWidgetData;
-  @Input() propsChanged: Subject<any>;
+export class TripswidgetComponent extends BaseComponent implements OnInit, AfterViewInit {
+  @Input() userId: string;
+  @Input() canCreateTrip = false;
+  @Input() title: string;
   @Output() tripClicked = new EventEmitter<ITrip>();
 
   @ViewChild(MatPaginator) paginator: MatPaginator;
@@ -28,20 +27,14 @@ export class TripswidgetComponent extends BaseComponent implements OnInit, After
     'userCount'
   ];
 
+  selectedTrips: ITrip[] = [];
   dataSource = new MatTableDataSource<ITrip>();
-
-  $propsChangedSubscription: Subscription;
 
   constructor(protected store: Store<AppState>) {
     super(store);
    }
 
   ngOnInit() {
-    this.$propsChangedSubscription = this.propsChanged
-      .subscribe(x => {
-        this.afterAssignTrips();
-      });
-      
     this.afterAssignTrips();
   }
 
@@ -50,19 +43,14 @@ export class TripswidgetComponent extends BaseComponent implements OnInit, After
     this.dataSource.paginator = this.paginator;
   }
 
-  ngOnDestroy() {
-    super.ngOnDestroy();
-    this.$propsChangedSubscription.unsubscribe();
-  }
-
-  
   rowClickedEvent(trip: ITrip) {
     this.tripClicked.next(trip);
   }
 
   afterAssignTrips() {
-    if (this.dataSource) {
-      this.dataSource.data = this.props.trips;
+    if (this.dataSource && this.trips) {
+      this.selectedTrips = this.trips.filter(x => this.tripsUsers.find(t => t.tripId === x.id && t.userId === this.userId))
+      this.dataSource.data = this.selectedTrips;
     }
   }
 
